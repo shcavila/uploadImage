@@ -129,13 +129,7 @@
                         contentType: false,
                         processData: false,
                         success: function (response) {
-                            if (response != 0) {
-                                // $("#img").attr("src", response);
-                                // $(".preview img").show(); // Display image element
-                                console.log(response)
-                            } else {
-                                alert('file not uploaded');
-                            }
+                            console.log(response)
                         },
                     });
                 });
@@ -205,12 +199,20 @@
         })
 
         $.ajax({
-            url: 'http://127.0.0.1:5000/item/retrieve/all',
+            url: 'http://127.0.0.1:5000/all',
             type: 'POST',
             success: function (result) {
-                result.data.forEach(item => {
-                    $('tbody').append("<tr id = '" + item._id + "'><td>" + item.item + "</td><td>" + item.quantity + "</td><td>" + item.priority + "</td><td>" + update + "</td><td>" + dlete + "</td></tr>")
-                });
+                //result.data.forEach(item => {
+                    // $('tbody').append("<tr id = '" + item._id + "'><td>" + item.item + "</td><td>" + item.quantity + "</td><td>" + item.priority + "</td><td>" + update + "</td><td>" + dlete + "</td></tr>")
+
+               // });
+               
+           
+            // let t = s.<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAA1BMVEUAA
+            //ACnej3aAAAAPUlEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8GadCAABYe850QAAAABJRU5ErkJggg==
+            // '/>
+             var img = $('<img />', { id: 'Myid', src: 'data:image/jpeg;base64,'+result, alt: 'MyAlt' ,height:'150px',width:'200px' }); img.appendTo($('tbody'));
+               
             }
         })
 

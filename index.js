@@ -3,6 +3,8 @@ var app = require('express')();
 var http = require("http").Server(app)
 var port = process.env.PORT || 5000;
 const multer = require('multer');
+const Shop = require('./model/shop')
+const fs = require('fs')
 
 const itemRoute = require('./routes/item.route')
 
@@ -36,7 +38,38 @@ app.use('/item',itemRoute);
 
 app.post('/create', upload.single('photo'), (req, res, next) => {
     console.log('hello')
+    var img = fs.readFileSync(req.file.path);
+ var encode_image = img.toString('base64');
+ // Define a JSONobject for the image attributes for saving to database
+  
+ var finalImg = {
+      contentType: req.file.mimetype,
+      item:  new Buffer(encode_image, 'base64')
+   };
+   let shop = new Shop(finalImg)
+   shop.save()
+   .then(() =>{
+       console.log('saved')
+       res.status(200).send()
+   }).catch(err =>{
+       console.log(err)
+       res.end()
+   })
+
+
     
+  })
+
+  app.post('/all',(req, res) =>{
+      console.log('hello')
+      Shop.find({_id: '5dc3c1bf84543c1580c722e0'})
+      .then(result =>{
+          console.log(result[0].item.toString('base64'))
+          
+          res.send(result[0].item.toString('base64'))
+      }).catch(err =>{
+          console.log(err)
+      })
   })
 
 

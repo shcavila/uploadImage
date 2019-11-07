@@ -12,15 +12,12 @@ db.once('open', function () {
 var shoppingSchema = new Schema({
 
     item:{
-        type: String,
+        type: Buffer,
         required: true,
-        unique: true
+       
     },
     
-    quantity:{
-        type: Date,
-        required: true
-    }
+    
 })
 
 shoppingSchema.plugin(validator, { message: 'Item must be unique!' });
